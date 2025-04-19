@@ -52,7 +52,7 @@ const articleSchema = new Schema<ArticleDocument>({
     validate: {
       validator: function (v: string) {
         const urlRegex =
-          /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*(\?.*)?(#.*)?$/;
+          /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*(\?.*)?(#.*)?(\.(mp4|mp3|wav|avi))?$/;
         return urlRegex.test(v);
       },
       message: "Media URL must be a valid URL.",
