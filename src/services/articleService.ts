@@ -16,7 +16,7 @@ export class ArticleService {
       })
       .populate({
         path: "author",
-        select: "_id authorName authorImage",
+        select: "_id authorName authorImage description",
       });
   }
 
