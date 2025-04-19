@@ -52,7 +52,7 @@ class ArticleController {
       tag,
       articleType,
       page = "1",
-      limit = "10",
+      limit = "5",
     } = req.query as {
       categories?: string | string[];
       author?: string;
