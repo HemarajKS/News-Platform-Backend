@@ -117,6 +117,7 @@ class ArticleController {
       const simplifiedArticles = articles.map((article) => ({
         title: article.title,
         hero: article.hero,
+        subtitle: article.subtitle,
         articleId: article._id,
         categoryId: article.category ?? null,
         authorId: article.author ?? null,
