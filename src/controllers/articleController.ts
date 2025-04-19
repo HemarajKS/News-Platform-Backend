@@ -2,14 +2,17 @@ import { Request, Response } from "express";
 import { ArticleService } from "../services/articleService";
 import mongoose from "mongoose";
 import { AuthorService } from "../services/authorService";
+import { CategoryService } from "../services/categoryService";
 
 class ArticleController {
   private articleService: ArticleService;
   private authorService: AuthorService;
+  private categoryService: CategoryService;
 
   constructor() {
     this.articleService = new ArticleService();
     this.authorService = new AuthorService();
+    this.categoryService = new CategoryService();
     this.getAllArticles = this.getAllArticles.bind(this);
     this.getArticleById = this.getArticleById.bind(this);
     this.filterArticles = this.filterArticles.bind(this);
@@ -47,14 +50,14 @@ class ArticleController {
 
   public async filterArticles(req: Request, res: Response): Promise<void> {
     const {
-      categories,
+      category,
       author,
       tag,
       articleType,
       page = "1",
       limit = "5",
     } = req.query as {
-      categories?: string | string[];
+      category?: string;
       author?: string;
       tag?: string;
       articleType?: string;
@@ -64,13 +67,10 @@ class ArticleController {
 
     try {
       const { Types } = mongoose;
-      const categoryIds =
-        categories && Array.isArray(categories)
-          ? categories
-              .filter((category) => Types.ObjectId.isValid(category))
-              .map((category) => new Types.ObjectId(category))
-          : categories && Types.ObjectId.isValid(categories)
-          ? [new Types.ObjectId(categories)]
+
+      const categoryId =
+        category && Types.ObjectId.isValid(category)
+          ? new Types.ObjectId(category)
           : undefined;
 
       const authorId =
@@ -79,6 +79,7 @@ class ArticleController {
           : undefined;
 
       let authorData = null;
+      let categoryData = null;
 
       const pageNumber = parseInt(page, 10);
       const pageSize = parseInt(limit, 10);
@@ -92,8 +93,18 @@ class ArticleController {
         }
       }
 
+      if (category && categoryId) {
+        const categoryDoc = await this.categoryService.getCategoryById(
+          category
+        );
+
+        if (category && categoryDoc) {
+          categoryData = categoryDoc ?? null;
+        }
+      }
+
       const { articles, total } = await this.articleService.filterArticles(
-        categoryIds,
+        categoryId,
         authorId,
         tag as string | undefined,
         articleType as string | undefined,
@@ -117,12 +128,9 @@ class ArticleController {
         status: 1,
         message: "success",
         data: {
-          categoryIds: categoryIds ?? null,
+          categoryName: categoryData?.categoryName ?? null,
           tag: tag ?? null,
-          author: {
-            authorName: authorData?.authorName ?? "Anonymous",
-            authorId: authorData?._id ?? null,
-          },
+          author: authorData?.authorName ?? "Anonymous",
           articles: simplifiedArticles,
           page: pageNumber,
           totalPages,

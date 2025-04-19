@@ -45,7 +45,7 @@ export class ArticleService {
   }
 
   public async filterArticles(
-    category?: mongoose.Types.ObjectId[],
+    category?: mongoose.Types.ObjectId,
     author?: mongoose.Types.ObjectId,
     tag?: string,
     articleType?: string,
@@ -53,7 +53,7 @@ export class ArticleService {
     pageSize: number = 10
   ): Promise<{ articles: ArticleDocument[]; total: number }> {
     const filter: Record<string, any> = {};
-    if (category && category.length > 0) filter.category = { $in: category };
+    if (category) filter.category = category;
     if (author) filter.author = author;
     if (tag) filter.tags = { $in: [tag] };
     if (articleType) filter.articleType = articleType;
