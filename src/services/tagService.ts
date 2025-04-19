@@ -5,8 +5,12 @@ export class TagService {
     return await TagModel.find();
   }
 
-  public async addTag(tagName: string): Promise<TagDocument> {
-    const newTag = new TagModel({ tagName });
+  public async addTag(tagName: string): Promise<TagDocument | null> {
+    const existingTag = await TagModel.findOne({ name: tagName });
+    if (existingTag) {
+      return null; // Return null if the tag already exists
+    }
+    const newTag = new TagModel({ name: tagName });
     return await newTag.save();
   }
 
