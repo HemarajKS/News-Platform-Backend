@@ -12,10 +12,7 @@ const MONGO_URI = "mongodb://127.0.0.1:27017/news-platform";
 export default async function seedDatabase() {
   try {
     // Connect to MongoDB
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(MONGO_URI);
     console.log("Connected to MongoDB");
 
     // Seed Categories

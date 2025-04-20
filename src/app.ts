@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 const MONGO_URI = "mongodb://127.0.0.1:27017/news-platform";
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
     seedDatabase();
