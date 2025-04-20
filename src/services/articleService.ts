@@ -59,7 +59,7 @@ export class ArticleService {
     if (articleType) filter.articleType = articleType;
 
     const articles = await ArticleModel.find(filter)
-      .sort({ publishedDate: -1 }) // Sort by latest published date
+      .sort({ published: -1 }) // Sort by latest published date
       .skip(skip)
       .limit(pageSize);
 
