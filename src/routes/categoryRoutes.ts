@@ -1,3 +1,14 @@
+/**
+ * Express router for handling category-related routes.
+ * 
+ * Routes:
+ * - `GET /` - Retrieves a list of all categories.
+ * - `POST /` - Adds a new category.
+ * - `PUT /:id` - Updates an existing category by its ID.
+ * - `DELETE /:id` - Deletes a category by its ID.
+ * 
+ * @module categoryRoutes
+ */
 import { Router } from "express";
 import CategoryController from "../controllers/categoryController";
 

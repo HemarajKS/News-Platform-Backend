@@ -1,3 +1,15 @@
+/**
+ * Express router for handling tag-related routes.
+ *
+ * Routes:
+ * - `GET /` - Retrieves a list of tags.
+ * - `POST /` - Adds a new tag.
+ * - `DELETE /:id` - Deletes a tag by its ID.
+ *
+ * @module tagRoutes
+ * @requires express.Router
+ * @requires ../controllers/tagController
+ */
 import { Router } from "express";
 import TagController from "../controllers/tagController";
 

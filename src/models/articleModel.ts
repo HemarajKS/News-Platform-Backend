@@ -1,3 +1,32 @@
+/**
+ * Represents the Article document in the MongoDB database.
+ * This model defines the schema and TypeScript interface for articles.
+ * Articles can be of type TEXT, AUDIO, or VIDEO and include metadata such as
+ * title, subtitle, hero image, description, media URL, publication date, category,
+ * tags, and author.
+ *
+ * @interface ArticleDocument
+ * @extends {Document}
+ *
+ * @property {string} title - The title of the article. This field is required.
+ * @property {string} subtitle - The subtitle of the article. This field is optional.
+ * @property {string} hero - The URL of the hero image for the article. This field is required.
+ * @property {"TEXT" | "AUDIO" | "VIDEO"} articleType - The type of the article. This field is required.
+ * @property {string} description - A single HTML string representing the article's content. Must be valid HTML.
+ * @property {string} [mediaUrl] - The URL of the media file (e.g., audio or video). Required for AUDIO and VIDEO articles.
+ * @property {Date} published - The publication date of the article. Defaults to the current date.
+ * @property {Schema.Types.ObjectId} category - A reference to the Category document. This field is required.
+ * @property {string[]} tags - A list of tags associated with the article. This field is required.
+ * @property {Schema.Types.ObjectId} author - A reference to the Author document. This field is required.
+ *
+ * @class Article
+ * @extends {Model<ArticleDocument>}
+ *
+ * @description
+ * The `Article` model is used to interact with the `articles` collection in the database.
+ * It includes validation for fields such as `description` (valid HTML) and `mediaUrl` (valid URL).
+ * The `mediaUrl` field is conditionally required based on the `articleType`.
+ */
 import { Schema, model, Document } from "mongoose";
 
 // Define the TypeScript interface for the Article document
