@@ -24,7 +24,18 @@ class ArticleController {
   public async getAllArticles(_req: Request, res: Response): Promise<void> {
     try {
       const articles = await this.articleService.getAllArticles();
-      res.status(200).json({ status: 1, message: "success", data: articles });
+      const newArticles = articles.map((article) => {
+        const obj = article.toObject();
+        const { _id, ...rest } = obj;
+        return {
+          ...rest,
+          articleId: _id,
+        };
+      });
+
+      res
+        .status(200)
+        .json({ status: 1, message: "success", data: newArticles });
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred";
