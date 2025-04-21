@@ -3,7 +3,7 @@ import ArticleModel, { ArticleDocument } from "../models/articleModel";
 
 export class ArticleService {
   public async getAllArticles(): Promise<ArticleDocument[]> {
-    return await ArticleModel.find();
+    return await ArticleModel.find().sort({ published: -1 }); // Sort by latest published date
   }
 
   public async getArticleById(
